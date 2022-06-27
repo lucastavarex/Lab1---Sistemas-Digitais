@@ -1,0 +1,53 @@
+-------------- DATA: 22/06/2022                        --------------
+-------------- AUTOR: LUCAS TAVARES DA SILVA FERREIRA  --------------
+-------------- DRE: 120152739                          --------------
+-------------- TÍTULO: TRABALHO 1 DE LABORATÓRIO       --------------
+-------------- DISCIPLINA: SISTEMAS DIGITAIS           --------------
+-------------- PROFESSOR: ROBERTO PACHECO              --------------
+
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+
+-- NESTE ARQUIVO PRINCIPAL(MAIN), SERÁ ARQUITETADO A 
+-- COMUNICAÇÃO DO SOFTWARE COM O HARDWARE(PLACA), DEFININDO AS ENTRADAS E SAÍDAS.
+
+ENTITY MAIN IS -- COMPONENTES DA FPGA
+    PORT( 
+		V_SW: IN STD_LOGIC_VECTOR (17 DOWNTO 7);  -- VETOR DAS ENTRADAS 
+	    LEDR: OUT STD_LOGIC_VECTOR (7 DOWNTO 0)  --  LED DAS FLAGS + LED DO RESULTADO  |                                                                            
+		  --                                                                           | 
+		  --                           ATENÇÃO!!!                    <-----------------*  
+          --   1)   OS 4 PRIMEIRO BITS SÃO REFERENTES AS FLAGS !!!	 
+		  --   2)   OS OUTROS 4 BITS SÃO REFERENTES AO RESULTADO DA OPERAÇÃO!!!
+		  --   3)   AS VARIÁVEIS ESCOLHIDAS SÃO COMPATIVEIS COM O LABSLANDS
+		
+            );
+END MAIN;
+ARCHITECTURE DADOS OF MAIN IS
+-- SIGNAL SAIDA TEMPORÁRIO : STD_LOGIC_VECTOR(3 DOWNTO 0);
+SIGNAL RES : STD_LOGIC_VECTOR(3 DOWNTO 0); 
+-- SIGNAL SAIDA FINAL : STD_LOGIC_VECTOR(3 DOWNTO 0);
+SIGNAL RES2: STD_LOGIC_VECTOR (3 DOWNTO 0);
+
+
+COMPONENT ULA IS 
+    PORT( 
+		A, B: IN STD_LOGIC_VECTOR (3 DOWNTO 0); 
+		SEL : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
+		RES: OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
+		COUT,NULO,OVRF,NEG: OUT STD_LOGIC;
+		RES2: OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
+	    R1,R2,R3,R4: OUT STD_LOGIC
+        
+
+            );
+END COMPONENT ULA;
+
+
+BEGIN 
+
+-- AQUI ASSOCIA-SE AS SAIDAS E ENTRADAS DA NOSSA UNIDADE LÓGICA ARITMÉTICA COM A FPGA !!!
+UNIDADE: ULA PORT MAP (V_SW(17 DOWNTO 14),V_SW(13 DOWNTO 10),V_SW(9 DOWNTO 7),RES,LEDR(3),LEDR(1),LEDR(2),LEDR(0),RES2,LEDR(7),LEDR(6),LEDR(5) ,LEDR(4));
+    
+
+END DADOS;
