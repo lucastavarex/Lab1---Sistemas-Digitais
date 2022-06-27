@@ -51,12 +51,6 @@ END COMPONENT ULA;
 	 	 
     BEGIN
 
-        WAIT FOR 2000000000 ns;
-        A <= "0001";
-        B <= "0011";
-        SEL <= "000";
-        
-    
         -- SUBTRAÇÃO DE DOIS NÚMEROS POSITIVOS:
         WAIT FOR 2000000000 ns;
         A <= "0001";
